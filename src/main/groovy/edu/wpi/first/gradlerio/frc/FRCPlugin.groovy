@@ -78,6 +78,10 @@ class FRCPlugin implements Plugin<Project> {
             targetExtension.target(name, RoboRIO, new ActionWrapper(closure))
         })
 
+        targetExtensionAware.extensions.add('vmxPi', { String name, Closure closure ->
+            targetExtension.target(name, VMXPi, new ActionWrapper(closure))
+        })
+
         targetExtensionAware.extensions.add('frcCompatibleTarget', { String name, Closure closure ->
             targetExtension.target(name, FRCCompatibleTarget, new ActionWrapper(closure))
         })
@@ -92,8 +96,8 @@ class FRCPlugin implements Plugin<Project> {
     }
 
     public static void allFrcTargets(DeployExtension ext, Artifact artifact) {
-        ext.targets.withType(FRCCompatibleTarget).all { RoboRIO r ->
-            artifact.targets << r.name
+        ext.targets.withType(FRCCompatibleTarget).all { FRCCompatibleTarget t ->
+            artifact.targets << t.name
         }
     }
 
